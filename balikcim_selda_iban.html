@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0B1F3A" />
+  <title>Balıkçım Selda - Ödeme Bilgileri</title>
+  <style>
+    :root{
+      --navy:#0B1F3A;
+      --navy2:#12345A;
+      --white:#FFFFFF;
+      --soft:#EDF4FA;
+      --line:#D7E4EF;
+      --accent:#68B7D8;
+      --success:#1F9D63;
+    }
+    *{box-sizing:border-box}
+    html,body{
+      margin:0;
+      width:100%;
+      height:100%;
+      overflow:hidden;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      background:var(--navy);
+      color:var(--navy);
+    }
+    body{
+      display:flex;
+      justify-content:center;
+      align-items:stretch;
+    }
+    .page{
+      position:relative;
+      width:100%;
+      max-width:520px;
+      min-height:100svh;
+      height:100svh;
+      background:
+        radial-gradient(circle at 85% 7%, rgba(104,183,216,.24), transparent 24%),
+        linear-gradient(180deg, #ffffff 0%, #f7fbfe 100%);
+      display:flex;
+      flex-direction:column;
+      padding:
+        max(18px, env(safe-area-inset-top))
+        18px
+        max(16px, env(safe-area-inset-bottom));
+      overflow:hidden;
+    }
+    .wave{
+      position:absolute;
+      left:-30%;
+      right:-30%;
+      top:-52px;
+      height:205px;
+      background:var(--navy);
+      border-radius:0 0 50% 50%;
+      z-index:0;
+    }
+    .hero{
+      z-index:1;
+      color:white;
+      text-align:center;
+      padding-top:8px;
+      flex:0 0 auto;
+    }
+    .fish{
+      width:66px;
+      height:42px;
+      margin:0 auto 4px;
+      display:block;
+    }
+    .brand{
+      margin:0;
+      font-size:26px;
+      line-height:1;
+      font-weight:900;
+      letter-spacing:.8px;
+    }
+    .subtitle{
+      margin:8px 0 0;
+      font-size:12px;
+      opacity:.86;
+      letter-spacing:1.4px;
+      text-transform:uppercase;
+    }
+    .content{
+      z-index:1;
+      flex:1 1 auto;
+      min-height:0;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:12px;
+      padding-top:58px;
+      padding-bottom:4px;
+    }
+    .heading{
+      text-align:center;
+      margin-bottom:2px;
+    }
+    .heading h2{
+      margin:0;
+      font-size:23px;
+      color:var(--navy);
+    }
+    .heading p{
+      margin:5px 0 0;
+      font-size:13px;
+      color:#607086;
+    }
+    .card{
+      background:var(--white);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:13px 14px;
+      box-shadow:0 8px 24px rgba(11,31,58,.08);
+    }
+    .label{
+      display:block;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:1px;
+      color:#6C7D90;
+      margin-bottom:6px;
+    }
+    .value-row{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:10px;
+      align-items:center;
+    }
+    .value{
+      min-width:0;
+      font-size:18px;
+      font-weight:850;
+      line-height:1.2;
+      color:var(--navy);
+      word-break:break-word;
+    }
+    .iban{
+      font-size:15px;
+      letter-spacing:.5px;
+    }
+    button{
+      border:0;
+      border-radius:12px;
+      background:var(--navy);
+      color:white;
+      font-size:13px;
+      font-weight:800;
+      padding:11px 13px;
+      cursor:pointer;
+      min-width:76px;
+      box-shadow:0 4px 12px rgba(11,31,58,.15);
+    }
+    button:active{transform:scale(.98)}
+    .hint{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      justify-content:center;
+      color:#718195;
+      font-size:11px;
+      text-align:center;
+      margin-top:2px;
+    }
+    .dot{
+      width:7px;height:7px;border-radius:50%;background:var(--accent);flex:0 0 auto;
+    }
+    .footer{
+      z-index:1;
+      flex:0 0 auto;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:6px;
+      color:#75869A;
+      font-size:10px;
+      padding-bottom:2px;
+    }
+    .toast{
+      position:absolute;
+      left:50%;
+      bottom:calc(18px + env(safe-area-inset-bottom));
+      transform:translate(-50%,18px);
+      background:var(--success);
+      color:white;
+      font-size:12px;
+      font-weight:800;
+      padding:10px 14px;
+      border-radius:999px;
+      opacity:0;
+      pointer-events:none;
+      transition:.22s ease;
+      z-index:5;
+      white-space:nowrap;
+      box-shadow:0 7px 18px rgba(0,0,0,.14);
+    }
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+    @media (max-height:650px){
+      .content{gap:8px;padding-top:30px}
+      .card{padding:10px 12px}
+      .heading h2{font-size:20px}
+      .heading p{font-size:11px}
+      .value{font-size:16px}
+      .iban{font-size:13px}
+      button{padding:9px 10px}
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="wave"></div>
+
+    <header class="hero">
+      <svg class="fish" viewBox="0 0 120 70" aria-hidden="true">
+        <path fill="#fff" d="M15 35c18-22 49-28 73-13l17-13v20h0l10 6-10 6v20L88 48C64 63 33 57 15 35Z"/>
+        <circle cx="76" cy="30" r="3.8" fill="#0B1F3A"/>
+        <path d="M28 35c10-7 18-7 28 0-10 7-18 7-28 0Z" fill="#68B7D8"/>
+      </svg>
+      <h1 class="brand">BALIKÇIM SELDA</h1>
+      <p class="subtitle">Taze balık • Güvenli ödeme</p>
+    </header>
+
+    <section class="content">
+      <div class="heading">
+        <h2>Ödeme Bilgileri</h2>
+        <p>Bilgiyi tek dokunuşla kopyalayabilirsiniz.</p>
+      </div>
+
+      <div class="card">
+        <span class="label">AD SOYAD</span>
+        <div class="value-row">
+          <div class="value" id="name">Selda Çelik</div>
+          <button onclick="copyText('name','Ad Soyad kopyalandı')">Kopyala</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="label">IBAN</span>
+        <div class="value-row">
+          <div class="value iban" id="iban">TR50 0006 4000 0013 4651 2985 85</div>
+          <button onclick="copyText('iban','IBAN kopyalandı')">Kopyala</button>
+        </div>
+      </div>
+
+      <div class="hint">
+        <span class="dot"></span>
+        <span>Ödeme yapmadan önce alıcı bilgilerini kontrol edin.</span>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>🐟</span>
+      <span>Balıkçım Selda</span>
+    </footer>
+
+    <div class="toast" id="toast">Kopyalandı</div>
+  </main>
+
+  <script>
+    function copyText(id, message){
+      const text = document.getElementById(id).innerText.replace(/\s+/g,' ').trim();
+      navigator.clipboard.writeText(text).then(() => showToast(message)).catch(() => {
+        const el=document.createElement('textarea');
+        el.value=text; document.body.appendChild(el); el.select();
+        document.execCommand('copy'); el.remove(); showToast(message);
+      });
+    }
+    let timer;
+    function showToast(message){
+      const toast=document.getElementById('toast');
+      toast.textContent=message;
+      toast.classList.add('show');
+      clearTimeout(timer);
+      timer=setTimeout(()=>toast.classList.remove('show'),1500);
+    }
+  </script>
+</body>
+</html>
